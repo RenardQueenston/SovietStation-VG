@@ -1,0 +1,20 @@
+{
+    "rock" : {
+"International":{"title":"International","artist":"USSR","album":"Soviet","url":"http://upload.wikimedia.org/wikipedia/commons/6/69/Internationale-ru.ogg","length":239}},
+    "jazz" : {
+"Petushok Theme":{"title":"Petushok Theme","artist":"Smallgay","album":"Ballon","url":"http://freedownloads.last.fm/download/129744966/Every%2BStory%2BBegins%2Bwith%2Ba%2BName%2B%2528Opening%2B-%2BBombing%2BMission%2529.mp3","lenght":180}},
+    "bar" : {
+"Barsik The King":{"title":"Barsik The King","artist":"Adjutor","album":"Clown","url":"sound/jukemedia/BTK.ogg","length":166}
+},
+    "endgame" : {},
+    "clockwork" : {
+"Soviet Station Anthem":{"title":"Soviet Station Anthem","artist":"Leader","album":"Petushok","url":"sound/jukemedia/Anthem.mp3","lenght":65}
+},
+    "emagged" : {
+        "obfuscate":"true"
+    },
+    "shuttle" : {},
+    "muzak" : {},
+    "trance" : {},
+    "keygen" : {}
+}
