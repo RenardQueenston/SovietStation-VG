@@ -425,7 +425,7 @@
 /obj/item/weapon/fiberbag
 	name = "fiber bag"
 	desc = "Used to hold fiber evidence for the detective."
-	icon = 'icons/obj/forensics.dmi'
+	icon = 'forensics.dmi'
 	icon_state = "fiberbag"
 	var/list/fibers_complete = list()
 
@@ -483,7 +483,7 @@
 /obj/item/weapon/reagent_containers/spray/luminol
 	name = "luminol bottle"
 	desc = "A bottle containing an ordorless, colorless liquid."
-	icon = 'icons/obj/forensics.dmi'
+	icon = 'forensics.dmi'
 	icon_state = "luminol"
 	item_state = "cleaner"
 	amount_per_transfer_from_this = 10
@@ -499,7 +499,7 @@
 /obj/machinery/dnaforensics
 	name = "DNA analyzer"
 	desc = "A high tech machine that is designed to read DNA samples properly."
-	icon = 'icons/obj/forensics.dmi'
+	icon = 'forensics.dmi'
 	icon_state = "dnaopen"
 	anchored = 1
 	var/ui_title = "QuikScan DNA Analyzer"
@@ -670,7 +670,7 @@
 /obj/machinery/printer
 	name = "printer"
 	desc = "Your standard printer."
-	icon = 'icons/obj/forensics.dmi'
+	icon = 'forensics.dmi'
 	icon_state = "printer"
 	var/printing = 0
 	density = 1
