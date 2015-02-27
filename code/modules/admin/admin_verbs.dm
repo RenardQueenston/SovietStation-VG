@@ -491,7 +491,7 @@ var/list/admin_verbs_mod = list(
 
 /client/proc/warn(warned_ckey)
 	var/reason = "Autobanning due to too many formal warnings"
-	if(!check_rights(R_ADMIN))	return
+	if(!check_rights(R_MOD))	return
 
 	if(!warned_ckey || !istext(warned_ckey))	return
 	/*if(warned_ckey in admin_datums)
@@ -534,7 +534,7 @@ var/list/admin_verbs_mod = list(
 	feedback_add_details("admin_verb","WARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/unwarn(warned_ckey)
-	if(!check_rights(R_ADMIN))	return
+	if(!check_rights(R_MOD))	return
 
 	if(!warned_ckey || !istext(warned_ckey))	return
 	/*if(warned_ckey in admin_datums)
