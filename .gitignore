@@ -3,6 +3,7 @@
 *.rsc
 *.dmb
 *.lk
+*.sqlite
 info.json
 
 # WinMerge backups
