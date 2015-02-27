@@ -383,7 +383,7 @@ var/list/admin_verbs_mod = list(
 	set category = "Admin"
 	set desc = "Toggles ghost-like invisibility (Don't abuse this)"
 	if(holder && mob)
-		if(mob.invisibility == INVISIBILITY_OBSERVER)
+/*		if(mob.invisibility == INVISIBILITY_OBSERVER)
 			mob.invisibility = initial(mob.invisibility)
 			mob << "\red <b>Invisimin off. Invisibility reset.</b>"
 			mob.icon_state = "ghost"
@@ -393,7 +393,15 @@ var/list/admin_verbs_mod = list(
 			mob.invisibility = INVISIBILITY_OBSERVER
 			mob << "\blue <b>Invisimin on. You are now as invisible as a ghost.</b>"
 			mob.icon_state = "ghost"
-			mob.icon = 'icons/mob/mob.dmi'
+			mob.icon = 'icons/mob/mob.dmi'*/
+		if(mob.invisibility == INVISIBILITY_OBSERVER)
+			mob.invisibility = initial(mob.invisibility)
+			mob << "\red <b>Invisimin off. Invisibility reset.</b>"
+			mob.alpha = max(mob.alpha + 100, 255)
+		else
+			mob.invisibility = INVISIBILITY_OBSERVER
+			mob << "\blue <b>Invisimin on. You are now as invisible as a ghost.</b>"
+			mob.alpha = max(mob.alpha - 100, 0)
 
 
 /client/proc/player_panel()

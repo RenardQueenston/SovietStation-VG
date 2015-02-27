@@ -2,7 +2,7 @@
 	name = "Jirachi"
 	real_name = "Jirachi"
 	desc = "Small, white, humanoid creature, with short, stubby legs and comparatively longer arms."
-	icon = 'icons/mob/jirachi.dmi'
+	icon = 'jirachi.dmi'
 	icon_state = "Jirachi"
 	icon_living = "Jirachi"
 	maxHealth = 80
@@ -1226,7 +1226,7 @@
 
 /obj/item/device/jirachistone
 	name = "Shiny Stone"
-	icon = 'icons/mob/jirachi.dmi'
+	icon = 'jirachi.dmi'
 	icon_state = "stone"
 	item_state = "stone"
 	w_class = 2
