@@ -1,5 +1,5 @@
 var/global/randomize_laws      = 0 // Not right now - N3X
-var/global/base_law_type       = /datum/ai_laws/asimov  //Deinitialize this variable by commenting out Asimov as the base_law_type to activate AI lawset randomization
+var/global/base_law_type       = /datum/ai_laws/nanotrasen  //Nahui Asimova,  mi hotim nanotrasen
 var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck on MoMMIs. - N3X
 
 //Create proc for determining the lawset of the first silicon
