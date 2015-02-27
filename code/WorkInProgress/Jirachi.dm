@@ -17,7 +17,6 @@
 	speed = 0
 	unacidable = 1
 	status_flags = 1
-	flags = STOPSPRESSUREDMAGE
 	pass_flags = PASSTABLE
 	var/energy = 900
 	var/const/max_energy = 900
