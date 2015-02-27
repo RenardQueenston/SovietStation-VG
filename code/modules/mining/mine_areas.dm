@@ -3,7 +3,7 @@
 /area/mine
 	icon_state = "mining"
 	music = 'sound/ambience/song_game.ogg'
-
+	always_unpowered = 1
 	general_area = /area/mine
 	general_area_name = "Mining Station"
 

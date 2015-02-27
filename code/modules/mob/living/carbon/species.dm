@@ -373,7 +373,7 @@ var/global/list/whitelisted_species = list("Human")
 	language = "Clatter"
 	attack_verb = "punch"
 
-	flags = IS_WHITELISTED | HAS_LIPS | /*HAS_TAIL | NO_EAT |*/ NO_BREATHE /*| NON_GENDERED*/ | NO_BLOOD
+	flags = IS_WHITELISTED | HAS_LIPS | NO_SCAN |/*NO_EAT |*/ NO_BREATHE /*| NON_GENDERED*/ | NO_BLOOD
 
 	default_mutations=list(SKELETON)
 
@@ -403,7 +403,7 @@ var/global/list/whitelisted_species = list("Human")
 
 	primitive = /mob/living/carbon/monkey/tajara
 
-	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL
+	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL | HAS_SKIN_TONE
 
 	flesh_color = "#AFA59E"
 
