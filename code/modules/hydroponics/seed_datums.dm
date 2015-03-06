@@ -1093,7 +1093,7 @@ proc/populate_seed_list()
 	production = 6
 	yield = 6
 	growth_stages = 3
-	plant_icon = ""
+	plant_icon = "poppy"
 
 /datum/seed/flower/sunflower
 	name = "sunflowers"

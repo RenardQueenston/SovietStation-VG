@@ -42,6 +42,24 @@
 		src << "\red The forum URL is not set in the server configuration."
 	return
 
+/client/verb/donate()
+	set name = "donate"
+	set desc = "Donate."
+	set hidden = 1
+	if(alert("This will open the donate page in your browser. Are you sure?",,"Yes","No")=="No")
+		return
+	src << link("http://sovietstation.ru/index.php?showtopic=145")
+	return
+
+/client/verb/github()
+	set name = "github"
+	set desc = "GitHub."
+	set hidden = 1
+	if(alert("This will open the GitHub page in your browser. Are you sure?",,"Yes","No")=="No")
+		return
+	src << link("https://github.com/AndyAdjutor/SovietStation-VG")
+	return
+
 #define RULES_FILE "config/rules.html"
 /client/verb/rules()
 	set name = "Rules"

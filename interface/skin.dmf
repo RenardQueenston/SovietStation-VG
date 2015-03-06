@@ -80,54 +80,6 @@ macro "macro"
 		command = "a-intent harm"
 		is-disabled = false
 	elem 
-		name = "CTRL+A+REP"
-		command = ".west"
-		is-disabled = false
-	elem 
-		name = "CTRL+D+REP"
-		command = ".east"
-		is-disabled = false
-	elem 
-		name = "CTRL+E"
-		command = "quick-equip"
-		is-disabled = false
-	elem 
-		name = "CTRL+F"
-		command = "a-intent left"
-		is-disabled = false
-	elem 
-		name = "CTRL+G"
-		command = "a-intent right"
-		is-disabled = false
-	elem 
-		name = "CTRL+Q"
-		command = ".northwest"
-		is-disabled = false
-	elem 
-		name = "CTRL+R"
-		command = ".southwest"
-		is-disabled = false
-	elem 
-		name = "CTRL+S+REP"
-		command = ".south"
-		is-disabled = false
-	elem 
-		name = "CTRL+W+REP"
-		command = ".north"
-		is-disabled = false
-	elem 
-		name = "CTRL+X"
-		command = ".northeast"
-		is-disabled = false
-	elem 
-		name = "CTRL+Y"
-		command = "Activate-Held-Object"
-		is-disabled = false
-	elem 
-		name = "CTRL+Z"
-		command = "Activate-Held-Object"
-		is-disabled = false
-	elem 
 		name = "F1"
 		command = "adminhelp"
 		is-disabled = false
@@ -382,8 +334,8 @@ macro "hotkeymode"
 		command = ".options"
 		is-disabled = false
 	elem 
-		name = "F2+REP"
-		command = ".screenshot auto"
+		name = "F2"
+		command = "OOC"
 		is-disabled = false
 	elem 
 		name = "SHIFT+F2+REP"
@@ -1365,7 +1317,7 @@ window "rpane"
 	elem "rpane"
 		type = MAIN
 		pos = 281,0
-		size = 640x480
+		size = 637x480
 		anchor1 = none
 		anchor2 = none
 		font-family = ""
@@ -1404,7 +1356,7 @@ window "rpane"
 	elem "rpanewindow"
 		type = CHILD
 		pos = 0,0
-		size = 640x480
+		size = 637x480
 		anchor1 = 0,0
 		anchor2 = 100,100
 		font-family = ""
@@ -1427,9 +1379,9 @@ window "rpane"
 		splitter = 50
 		show-splitter = true
 		lock = none
-	elem "special_button"
+	elem "github"
 		type = BUTTON
-		pos = 456,0
+		pos = 384,0
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
@@ -1447,18 +1399,18 @@ window "rpane"
 		right-click = false
 		saved-params = "is-checked"
 		on-size = ""
-		text = "Special"
+		text = "GitHub"
 		image = ""
-		command = ".winset \"rpanewindow.left=window1\""
+		command = "github"
 		is-flat = false
 		stretch = false
 		is-checked = false
 		group = "rpanemode"
-		button-type = pushbox
-	elem "map"
+		button-type = pushbutton
+	elem "donateb"
 		type = BUTTON
-		pos = 386,0
-		size = 67x16
+		pos = 448,0
+		size = 60x16
 		anchor1 = none
 		anchor2 = none
 		font-family = ""
@@ -1475,14 +1427,42 @@ window "rpane"
 		right-click = false
 		saved-params = "is-checked"
 		on-size = ""
-		text = "MapName"
+		text = "Donate"
 		image = ""
-		command = "MapRender"
+		command = "donate"
 		is-flat = false
 		stretch = false
 		is-checked = false
-		group = ""
+		group = "rpanemode"
 		button-type = pushbutton
+	elem "special_button"
+		type = BUTTON
+		pos = 512,0
+		size = 60x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = false
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Special"
+		image = ""
+		command = ".winset \"rpanewindow.left=window1\""
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbox
 	elem "hosttracker"
 		type = BROWSER
 		pos = 392,25
@@ -1776,7 +1756,7 @@ window "browserwindow"
 window "infowindow"
 	elem "infowindow"
 		type = MAIN
-		pos = 281,0
+		pos = 281,-40
 		size = 640x480
 		anchor1 = none
 		anchor2 = none

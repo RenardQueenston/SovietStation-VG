@@ -124,6 +124,8 @@
 		// Update on_moved listeners.
 		INVOKE_EVENT(on_moved,list("loc"=NewLoc))
 		return 0
-
 	// Update on_moved listeners.
 	INVOKE_EVENT(on_moved,list("loc"=NewLoc))
+
+/mob/camera/blob/Process_Spacemove(var/check_drift = 0)
+	return 1

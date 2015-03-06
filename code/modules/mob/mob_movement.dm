@@ -228,15 +228,12 @@
 
 	if(mob.monkeyizing)	return//This is sota the goto stop mobs from moving var
 
-
-
 	if(Process_Grab())	return
 
 	if(mob.buckled)							//if we're buckled to something, tell it we moved.
 		return mob.buckled.relaymove(mob, dir)
 
 	if(!mob.canmove)	return
-
 	//if(istype(mob.loc, /turf/space) || (mob.flags & NOGRAV))
 	//	if(!mob.Process_Spacemove(0))	return 0
 
@@ -244,8 +241,8 @@
 		mob.lastarea = get_area(mob.loc)
 	if(mob.lastarea)
 		if((istype(mob.loc, /turf/space)) || ((mob.lastarea.has_gravity == 0) && (!istype(mob.loc, /obj/spacepod))))  // last section of if statement prevents spacepods being unable to move when the gravity goes down
-			if(!mob.Process_Spacemove(0))	return 0
-
+			if(!mob.Process_Spacemove(0))
+				return 0
 
 	if(isobj(mob.loc) || ismob(mob.loc))//Inside an object, tell it we moved
 		var/atom/O = mob.loc
@@ -437,7 +434,6 @@
 	//First check to see if we can do things
 	if(restrained())
 		return 0
-
 	/*
 	if(istype(src,/mob/living/carbon))
 		if(src.l_hand && src.r_hand)
