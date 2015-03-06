@@ -3,17 +3,18 @@
 /area/mine
 	icon_state = "mining"
 	music = 'sound/ambience/song_game.ogg'
-	always_unpowered = 1
 	general_area = /area/mine
 	general_area_name = "Mining Station"
 
 /area/mine/explored
 	name = "Mine"
 	icon_state = "explored"
+	always_unpowered = 1
 
 /area/mine/unexplored
 	name = "Mine"
 	icon_state = "unexplored"
+	always_unpowered = 1
 
 //TODO: Make all these types inherit from /area/mining_outpost/ instead.
 /area/mine/lobby
