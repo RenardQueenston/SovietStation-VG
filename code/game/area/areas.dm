@@ -23,7 +23,7 @@
 //		lighting_state = 4
 		//has_gravity = 0    // Space has gravity.  Because.. because.
 
-	if(requires_power)
+	if(requires_power || istype(src, /area/losttemple))
 		luminosity = 0
 	else
 		power_light = 0			//rastaf0

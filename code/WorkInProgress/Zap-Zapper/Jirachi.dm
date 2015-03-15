@@ -18,6 +18,7 @@
 	unacidable = 1
 	status_flags = 1
 	pass_flags = PASSTABLE
+	languages = ALL
 	var/energy = 900
 	var/const/max_energy = 900
 	var/star_form = 0		//Is S-form enabled?
@@ -42,10 +43,6 @@
 	var/used_teleport
 	var/used_steleport
 	var/used_hypno
-
-
-
-
 
 
 
@@ -93,11 +90,11 @@
 /mob.living/simple_animal/jirachi/ex_act(severity)
 	if(star_form == 1)
 		switch(severity)
-			if(1 to 2)
+			if(1)
+				..()
+			if(2 to 3)
 				visible_message("\ red \bold Jirachi protects itself from the explosion!")
 				return
-			if(3)
-				..()
 /mob/living/simple_animal/jirachi/attack_animal(mob/living/simple_animal/M as mob)
 	if(star_form == 1)
 		M.melee_damage_upper = 0
@@ -329,10 +326,16 @@
 		return
 
 	src << "\blue I put my hands on [Z] and let my energy flow through it's body."
-	if(!istype(Z, /mob/living/simple_animal/construct) || !istype(Z, /mob/living/simple_animal/hostile/faithless))
-		Z << "\blue <b>You feel immense energy course through you body!</b>"
+	if(istype(Z,/mob/living/simple_animal))
+		var/mob/living/simple_animal/I = Z
+		if(!I.supernatural)
+			I << "\blue <b>You feel immense energy course through you body!</b>"
+		else
+			I << "\red \bold That power makes you burn from inside! Aaarrgh!!!"
 	else
-		Z << "\red \bold That power makes you burn from inside! Aaarrgh!!!"
+		Z << "\blue <b>You feel immense energy course through you body!</b>"
+
+
 
 	if(istype(Z, /mob/living/silicon))
 		src << "\red For some reason, I can't heal that creature"
@@ -370,34 +373,52 @@
 				if(star_form == 1)
 					H.adjustToxLoss(-20)
 					H.adjustOxyLoss(-20)
-					H.adjustBruteLoss(-20)
-					H.adjustFireLoss(-20)
 					H.adjustCloneLoss(-20)
 					H.adjustBrainLoss(-20)
-					switch(H.health)	//Heals organs and stuff during healing
-						if(10 to 30)
-							if(M_HUSK in H.mutations)
-								H.mutations.Remove(M_HUSK)
-								H << "\blue As the power channels through your damaged skin, it starts to regenerate..."
-							for(var/datum/organ/external/O in H.organs)
-								if(O.status & ORGAN_BROKEN || O.status & ORGAN_SPLINTED)
-									O.status &= ~ORGAN_BROKEN
-									O.status &= ~ORGAN_SPLINTED
-									O.wounds.Cut()
-									H << "\blue Energy wave goes through your limbs, mending your bones"
-							H.jitteriness = 0
-							H.handle_pain()
-						if(31 to 50)
-							if(M_HUSK in H.mutations)
-								H.mutations.Remove(M_HUSK)
-								H << "\blue As the power channels through your damaged skin, it starts to regenerate..."
-							for(var/datum/organ/external/O in H.organs)
-								if(O.status & ORGAN_BROKEN || O.status & ORGAN_SPLINTED)
-									O.status &= ~ORGAN_BROKEN
-									O.status &= ~ORGAN_SPLINTED
-									O.wounds.Cut()
-									H << "\blue Energy wave goes through your limbs, mending your bones"
+					for(var/datum/organ/external/O in H.organs)
+						for(var/datum/wound/W in O.wounds)
+							W.heal_damage(15, 1)
+							if(W.damage == 0)
+								O.wounds -=W
+						if(!O.wounds.len)
+							if(O.status & ORGAN_BROKEN || O.status & ORGAN_SPLINTED)
+								O.status &= ~ORGAN_BROKEN
+								O.status &= ~ORGAN_SPLINTED
+								H << "\blue Energy wave goes through your body, mending bones in your [O.name]"
+							if(O.status & ORGAN_BLEEDING)
+								O.status &= ~ORGAN_BLEEDING
+								H << "\blue You feel energies mending bleeding wounds in your [O.name]"
+							if(O.status & ORGAN_CUT_AWAY || O.status & ORGAN_ATTACHABLE || O.status & ORGAN_DESTROYED)
+								O.status &= ~ORGAN_CUT_AWAY
+								O.status &= ~ORGAN_ATTACHABLE
+								O.status &= ~ORGAN_DESTROYED
+								H << "\blue You start feeling your severed limbs growing back"
+							if(O.status & ORGAN_DEAD)
+								O.status &= ~ORGAN_DEAD
+								H << "\blue You can feel your [O.name] again..."
+							O.amputated = 0
+							O.destspawn = 0
+							O.perma_injury = 0
+							O.stage = 0
+							O.update_damages()
 
+					switch(H.health)
+						if(0 to 20)
+							if(M_HUSK in H.mutations)
+								H.mutations.Remove(M_HUSK)
+								H << "\blue As the power channels through your damaged skin, it starts to regenerate..."
+							if(H.jitteriness > 101)
+								H.jitteriness = 101
+							H.reagents.reagent_list = null
+							H.vessel.reagent_list = list()
+							H.vessel.add_reagent("blood",560)
+							H.shock_stage = 0
+							spawn(1)
+								H.fixblood()
+						if(21 to 40)
+							if(M_HUSK in H.mutations)
+								H.mutations.Remove(M_HUSK)
+								H << "\blue As the power channels through your damaged skin, it starts to regenerate..."
 							var/datum/organ/external/head/h = H.organs_by_name["head"]
 							if(h.disfigured != 0)
 								h.disfigured = 0
@@ -408,24 +429,21 @@
 									I.damage = 0
 									H << "\blue Sweet feeling fills your body, as your viscera regenerates"
 								I.germ_level = 0
-							H.jitteriness = 0
-							H.handle_pain()
+							if(H.jitteriness > 101)
+								H.jitteriness = 101
+							H.reagents.reagent_list = null
+							H.vessel.reagent_list = list()
+							H.vessel.add_reagent("blood",560)
+							H.shock_stage = 0
+							spawn(1)
+								H.fixblood()
 
-						if(51 to 70)
+
+						if(41 to 69)
 							if(M_HUSK in H.mutations)
 								H.mutations.Remove(M_HUSK)
 								H << "\blue As the power channels through your damaged skin, it starts to regenerate..."
 							for(var/datum/organ/external/O in H.organs)
-								O.status &= ~ORGAN_BROKEN
-								O.status &= ~ORGAN_BLEEDING
-								O.status &= ~ORGAN_SPLINTED
-								O.status &= ~ORGAN_CUT_AWAY
-								O.status &= ~ORGAN_ATTACHABLE
-								O.status &= ~ORGAN_DEAD
-								if (!O.amputated)
-									O.status &= ~ORGAN_DESTROYED
-									O.destspawn = 0
-								O.rejuvenate()
 
 							var/datum/organ/external/head/h = H.organs_by_name["head"]
 							if(h.disfigured != 0)
@@ -438,13 +456,17 @@
 									H << "\blue Sweet feeling fills your body, as your viscera regenerates"
 								I.germ_level = 0
 
-							H.restore_blood()
-							H.jitteriness = 0
+							H.reagents.reagent_list = null
+							H.vessel.reagent_list = list()
+							H.vessel.add_reagent("blood",560)
+							H.shock_stage = 0
+							spawn(1)
+								H.fixblood()
 							H.radiation = 0
-							H.update_body()
-							H.handle_pain()
+							if(H.jitteriness > 101)
+								H.jitteriness = 101
 
-						if(71 to 100)
+						if(70 to INFINITY)
 							if(M_HUSK in H.mutations)
 								H.mutations.Remove(M_HUSK)
 								H << "\blue As the power channels through your damaged skin, it starts to regenerate..."
@@ -456,42 +478,63 @@
 								D.cure()
 							H.revive()
 							H.reagents.reagent_list = null
-							H.restore_blood()
-							H.jitteriness = 0
-							H.handle_pain()
+							H.vessel.reagent_list = list()
+							H.vessel.add_reagent("blood",560)
+							H.shock_stage = 0
+							spawn(1)
+								H.fixblood()
+							if(H.jitteriness > 101)
+								H.jitteriness = 101
 							H << "\blue <b>You feel much better!</b>"
-					H.update_body()
 				else
 					H.adjustToxLoss(-10)
 					H.adjustOxyLoss(-10)
-					H.adjustBruteLoss(-10)
-					H.adjustFireLoss(-10)
 					H.adjustCloneLoss(-10)
 					H.adjustBrainLoss(-10)
-					switch(H.health)
-						if(50 to 59)
-							if(M_HUSK in H.mutations)
-								H.mutations.Remove(M_HUSK)
-								H << "\blue As the power channels through your damaged skin, it starts to regenerate..."
-							for(var/datum/organ/external/O in H.organs)
-								if(O.status & ORGAN_BROKEN || O.status & ORGAN_SPLINTED)
-									O.status &= ~ORGAN_BROKEN
-									O.status &= ~ORGAN_SPLINTED
-									O.wounds.Cut()
-									H << "\blue Energy wave goes through your limbs, mending your bones"
-							H.handle_pain()
-							H.jitteriness = 0
-						if(60 to 69)
-							if(M_HUSK in H.mutations)
-								H.mutations.Remove(M_HUSK)
-								H << "\blue As the power channels through your damaged skin, it starts to regenerate..."
-							for(var/datum/organ/external/O in H.organs)
-								if(O.status & ORGAN_BROKEN || O.status & ORGAN_SPLINTED)
-									O.status &= ~ORGAN_BROKEN
-									O.status &= ~ORGAN_SPLINTED
-									O.wounds.Cut()
-									H << "\blue Energy wave goes through your limbs, mending your bones"
+					for(var/datum/organ/external/O in H.organs)
+						for(var/datum/wound/W in O.wounds)
+							W.heal_damage(5, 1)
+							if(W.damage == 0)
+								O.wounds -=W
+						if(!O.wounds.len)
+							if(O.status & ORGAN_BROKEN || O.status & ORGAN_SPLINTED)
+								O.status &= ~ORGAN_BROKEN
+								O.status &= ~ORGAN_SPLINTED
+								H << "\blue Energy wave goes through your body, mending bones in your [O.name]"
+							if(O.status & ORGAN_BLEEDING)
+								O.status &= ~ORGAN_BLEEDING
+								H << "\blue You feel energies mending bleeding wounds in your [O.name]"
+							if(O.status & ORGAN_CUT_AWAY || O.status & ORGAN_ATTACHABLE || O.status & ORGAN_DESTROYED)
+								O.status &= ~ORGAN_CUT_AWAY
+								O.status &= ~ORGAN_ATTACHABLE
+								O.status &= ~ORGAN_DESTROYED
+								H << "\blue You start feeling your severed limbs growing back"
+							if(O.status & ORGAN_DEAD)
+								O.status &= ~ORGAN_DEAD
+								H << "\blue You can feel your [O.name] again..."
+							O.amputated = 0
+							O.destspawn = 0
+							O.perma_injury = 0
+							O.stage = 0
+							O.update_damages()
 
+					switch(H.health)
+						if(50 to 60)
+							if(M_HUSK in H.mutations)
+								H.mutations.Remove(M_HUSK)
+								H << "\blue As the power channels through your damaged skin, it starts to regenerate..."
+							if(H.jitteriness > 101)
+								H.jitteriness = 101
+							H.reagents.reagent_list = null
+							H.vessel.reagent_list = list()
+							H.vessel.add_reagent("blood",560)
+							H.shock_stage = 0
+							spawn(1)
+								H.fixblood()
+						if(61 to 70)
+							if(M_HUSK in H.mutations)
+								H.mutations.Remove(M_HUSK)
+								H << "\blue As the power channels through your damaged skin, it starts to regenerate..."
 							var/datum/organ/external/head/h = H.organs_by_name["head"]
 							if(h.disfigured != 0)
 								h.disfigured = 0
@@ -502,26 +545,21 @@
 									I.damage = 0
 									H << "\blue Sweet feeling fills your body, as your viscera regenerates"
 								I.germ_level = 0
-							H.handle_pain()
-							H.jitteriness = 0
+							if(H.jitteriness > 101)
+								H.jitteriness = 101
+							H.reagents.reagent_list = null
+							H.vessel.reagent_list = list()
+							H.vessel.add_reagent("blood",560)
+							H.shock_stage = 0
+							spawn(1)
+								H.fixblood()
 
 
-						if(70 to 79)
+						if(71 to 89)
 							if(M_HUSK in H.mutations)
 								H.mutations.Remove(M_HUSK)
 								H << "\blue As the power channels through your damaged skin, it starts to regenerate..."
 							for(var/datum/organ/external/O in H.organs)
-								O.status &= ~ORGAN_BROKEN
-								O.status &= ~ORGAN_BLEEDING
-								O.status &= ~ORGAN_SPLINTED
-								O.status &= ~ORGAN_CUT_AWAY
-								O.status &= ~ORGAN_ATTACHABLE
-								O.status &= ~ORGAN_DEAD
-								if (!O.amputated)
-									O.status &= ~ORGAN_DESTROYED
-									O.destspawn = 0
-								O.rejuvenate()
-
 
 							var/datum/organ/external/head/h = H.organs_by_name["head"]
 							if(h.disfigured != 0)
@@ -534,13 +572,17 @@
 									H << "\blue Sweet feeling fills your body, as your viscera regenerates"
 								I.germ_level = 0
 
-							H.restore_blood()
-							H.jitteriness = 0
+							H.reagents.reagent_list = null
+							H.vessel.reagent_list = list()
+							H.vessel.add_reagent("blood",560)
+							H.shock_stage = 0
+							spawn(1)
+								H.fixblood()
 							H.radiation = 0
-							H.update_body()
-							H.handle_pain()
+							if(H.jitteriness > 101)
+								H.jitteriness = 101
 
-						if(80 to 100)
+						if(90 to INFINITY)
 							if(M_HUSK in H.mutations)
 								H.mutations.Remove(M_HUSK)
 								H << "\blue As the power channels through your damaged skin, it starts to regenerate..."
@@ -552,11 +594,16 @@
 								D.cure()
 							H.revive()
 							H.reagents.reagent_list = null
-							H.restore_blood()
-							H.jitteriness = 0
-							H.handle_pain()
+							H.vessel.reagent_list = list()
+							H.vessel.add_reagent("blood",560)
+							H.shock_stage = 0
+							spawn(1)
+								H.fixblood()
+							if(H.jitteriness > 101)
+								H.jitteriness = 101
 							H << "\blue <b>You feel much better!</b>"
-					H.update_body()
+				H.update_body()
+				H.updatehealth()
 
 			else if(istype(Z, /mob/living/carbon/alien))	//Aliens have different dam.system
 				var/mob/living/carbon/alien/A = Z
@@ -594,7 +641,7 @@
 
 		if(istype(Z, /mob/living/simple_animal))	//Constructs and faithlesses are dark creatures. What happens if we channel light energy through dark creature?
 			var/mob/living/simple_animal/S = Z
-			if(!istype(S, /mob/living/simple_animal/construct) && !istype(S, /mob/living/simple_animal/hostile/faithless))
+			if(!S.supernatural)
 				if(star_form == 1)
 					S.health += 40
 				else
@@ -620,7 +667,7 @@
 			return
 
 
-		sleep(15)
+		sleep(10)
 
 
 
@@ -892,7 +939,7 @@
 
 
 	while(star_form == 1)
-		src.energy -=5
+		src.energy -=3
 		sleep(10)
 
 		if(energy <= 0)
@@ -1032,6 +1079,68 @@
 	energy-=50
 	return
 
+/mob/living/simple_animal/jirachi/verb/showa()
+	set category = "Jirachi"
+	set name = "Show Abilities Info"
+
+	var/list/abilities = list()
+	abilities += "Star Form"
+	abilities += "Psystrike"
+	abilities += "Telepathy"
+	abilities += "Hypnosis"
+	abilities += "Hybernation"
+	abilities += "Teleport"
+	abilities += "Forcewall"
+	abilities += "Heal"
+	abilities += "Blink(Middle Mouse Button)"
+	abilities += "Global Telepathy(Star Form only ability)"
+	abilities += "Light Shockwave(Star Form only ability)"
+	abilities += "Starlight(Star Form only ability)"
+
+	var/A = input("What ability do you want to read about?", "Info") in abilities
+	switch(A)
+		if("Star Form")
+			src << ""
+			src << "Star Form - Enter your true form. It costs 3 energy per second. You can enter S-form only when your energy bar is full, and it has 10 minute cooldown from the moment Jirachi exited his second form. In S-form Jirachi is completely invunreable. It's other abilites greatly enhances. It also gains a full X-ray, medHUD vision, and three S-form only abilites. Jirachi is glowing brightly, while in it's second form. Briefly blinds nearly people, when it enters S-form. It can cancel it's second form in any time, and it cancels when it's energy drops to 0. In second case, Jirachi's HP will be cut in half."
+		if("Psystrike")
+			src << ""
+			src << "Psystrike - Stuns target for 15 seconds. Jirachi can't stun silicon units. Can be used through right-click on target Cooldown: 30 seconds. S-form upgrade: Stuns target for 25 seconds, makes target's vision blurry for 30 seconds and deals 25 points of brain damage."
+		if("Heal")
+			src << ""
+			src << "Heal - Heals target. Target must remain close to Jirachi, otherwise healing process will be interrupted. For humans: heals 10 points of every dam.type per second. Mends broken bones, grows back severed limbs, heals damaged internal organs and infection(but NOT viruses). It happens not instantly, and only when target's HP is high enough. Not only humans can be healed by Jirachi, it can heal anyone, even slimes, mokeys, mouses. There is three exceptions: Jirachi can't heal itself, IPC's and when it attempts to heal constructs or faithlesses, it will damage them, not heal. S-form upgrade: heals 20 points of every dam.type per second, folowing events will occur much faster."
+		if("Telepathy")
+			src << ""
+			src << "Telepathy - Sends telepathic message to anyone on the station. Jirachi can't send telepathic messages to silicons. S-form upgrade: message will appear in bold and big blue text."
+		if("Forcewall")
+			src << ""
+			src << "Forcewall - Creates a wall, which lasts for 30 seconds, and has 200 HP itself. Cooldown: 35 seconds. S-form upgrade: No cooldown."
+		if("Hybernation")
+			src << ""
+			src << "Hybernation - Jirachi sleeps, to regain it's health and energy. Restores 10 Energy and 1 HP per second. Jirachi is completely helpless while sleeping. Can't be used while if S-form."
+		if("Hypnosis")
+			src << ""
+			src << "Hypnosis - Jirachi starts hypnotizing selected target. If target moves - hypnosis will be interrupted.  If hypnosis was interrupted, Jirachi can't use this ability for 25 seconds, but energy will not be spended. After 12 seconds passed, and neither target, nor Jirachi moved, target will fall asleep for 5 minutes. Jirachi can't hypnotize IPC's, or the one with eye protection. S-form upgrade: Jirachi can hypnotize through eye protection, and target can't move or act while Jirachi hypnotizing it."
+		if("Teleport")
+			src << ""
+			src << "Teleport - Teleports Jirachi itself or anyone Jirachi can see into selected location in the world, it can also teleport you to the different Z-levels. Cooldown: 20 seconds. S-form upgrade: No cooldown, and Jirachi can teleport anyone in the world, not only the one it can see."
+		if("Blink(Middle Mouse Button)")
+			src << ""
+			src << "Blink - Costs 100 energy. Teleports Jirachi to the selected tile via middle mouse button or right-click => turf => Blink(100). Jirachi can't blink into blocked turfs. Cooldown: 5 seconds. S-form upgrade: No cooldown."
+		if("Global Telepathy(Star Form only ability)")
+			src << ""
+			src << "Global Telepathy - Sends telepathic message to everyone who is not dead and not silicon being. Message will appear and big and bold blue text"
+		if("Light Shockwave(Star Form only ability)")
+			src << ""
+			src << "Light Shockwave - Releases powerful shockwave, which stuns everybody from 25 to 15 seconds(depends on the distantion), and sends everything flying from Jirachi."
+		if("Starlight(Star Form only ability)")
+			src << ""
+			src << "Starlight - Revives target, if the soul in the body. When this happens, Jirachi's energy will be dropped to 0, and it will lose it's HP, inversely from it's remaining energy at the moment of using this ability. After that, remaining HP will be cut in half. Jirachi can die from using this ability, if his energy is too low, but the target still be revived. Jirachi can't revive IPC's and changeling victims."
+
+/mob/living/simple_animal/jirachi/verb/showe()
+	set category = "Jirachi"
+	set name = "Show Energy Points"
+
+	src << "\bold ENERGY: [energy]/900"
 
 /mob/living/simple_animal/jirachi/proc/starlight()
 	set category = "Jirachi"
@@ -1232,7 +1341,6 @@
 	w_class = 2
 	throw_speed = 4
 	throw_range = 10
-	flags = FPRINT
 	origin_tech = "powerstorage=6;materials=6;biotech=5;bluespace=5;magnets=5"
 	var/searching = 0
 
@@ -1284,8 +1392,3 @@
 			jirachi << "<b>You are now playing as Jirachi - the Child Of The Star!</b> Jirachi is the creature, born by means of Light, Life and Star powers. It is kind to all living beings. That means you ought to protect ordinary crew members, wizards, traitors, aliens, changelings, Syndicate Operatives and others from killing each other. <b><font color=red>Do no harm! Jirachi can't stand pain or suffering of any living creature. Try to use your offensive abilities as little as possible</font></b> In short - you are adorable but very powerful creature, which loves everybody. More information how to RP as Jirachi can be found here: http://tauceti.ru/forums/index.php?topic=3171.0 Have fun!"
 			dead_mob_list -= C
 			del(src)
-
-
-
-
-

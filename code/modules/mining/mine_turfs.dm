@@ -354,7 +354,9 @@
 	if(rand(1,500) == 1)
 		visible_message("<span class='notice'>An old dusty crate was buried within!</span>")
 		DropAbandonedCrate()
-
+	if(!istype(loc, /area/mine))
+		ChangeTurf(/turf/unsimulated/floor/ground/fertile)
+		return
 	var/turf/unsimulated/floor/asteroid/N = ChangeTurf(/turf/unsimulated/floor/asteroid)
 	N.fullUpdateMineralOverlays()
 

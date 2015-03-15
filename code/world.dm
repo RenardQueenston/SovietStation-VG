@@ -298,10 +298,7 @@
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\Documents\Projects\vgstation13\code\world.dm:235: s += "<b>[station_name()]</b>";
 	s += {"<b>[station_name()]</b>"
-		(
-		<a href=\"http://www.sovietstation.ru\">" Join Soviet Community!
-		</a>
-		)"}
+		(<a href=\"http://www.sovietstation.ru\">" Join Soviet Community!</a>)"}
 	// END AUTOFIX
 	var/list/features = list()
 

@@ -6,6 +6,7 @@
 	use_power = 0
 	machine_flags = 0
 	icon = 'icons/obj/doors/mineral.dmi'
+	icon_state = "wooddoor_closed"
 	prefix = "metal" //Corresponds to the mineral type
 
 	soundeffect = 'sound/effects/stonedoor_openclose.ogg'
@@ -117,20 +118,25 @@
 
 
 /obj/machinery/door/mineral/iron
+	icon_state = "metaldoor_closed"
 	prefix = "metal"
 
 /obj/machinery/door/mineral/silver
+	icon_state = "silverdoor_closed"
 	prefix = "silver"
 
 /obj/machinery/door/mineral/gold
+	icon_state = "golddoor_closed"
 	prefix = "gold"
 	hardness = 1
 
 /obj/machinery/door/mineral/uranium
+	icon_state = "uraniumdoor_closed"
 	prefix = "uranium"
 	luminosity = 2
 
 /obj/machinery/door/mineral/sandstone
+	icon_state = "sandstonedoor_closed"
 	prefix = "sandstone"
 	hardness = 0.5
 
@@ -174,10 +180,12 @@
 	return
 
 /obj/machinery/door/mineral/transparent/diamond
+	icon_state = "diamonddoor_closed"
 	prefix = "diamond"
 	hardness = 10
 
 /obj/machinery/door/mineral/wood
+	icon_state = "wooddoor_closed"
 	prefix = "wood"
 	hardness = 1
 	soundeffect = 'sound/effects/doorcreaky.ogg'
@@ -194,6 +202,7 @@
 	return
 
 /obj/machinery/door/mineral/resin
+	icon_state = "resindoor_closed"
 	prefix = "resin"
 	hardness = 1.5
 	var/close_delay = 100
