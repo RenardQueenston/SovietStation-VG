@@ -3,6 +3,7 @@
 	name = "lost temple"
 	icon_state = "away"
 	always_unpowered = 1
+	daylight = 1
 	var/arealum = 1
 
 	house

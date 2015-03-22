@@ -5,6 +5,7 @@
 /area
 	var/global/global_uid = 0
 	var/uid
+	var/daylight = 0
 
 /area/New()
 	icon_state = ""
@@ -23,14 +24,15 @@
 //		lighting_state = 4
 		//has_gravity = 0    // Space has gravity.  Because.. because.
 
-	if(requires_power || istype(src, /area/losttemple))
-		luminosity = 0
-	else
-		power_light = 0			//rastaf0
-		power_equip = 0			//rastaf0
-		power_environ = 0		//rastaf0
-		luminosity = 1
-		lighting_use_dynamic = 0
+//	if(requires_power)
+//		luminosity = 0
+	if(!requires_power)
+		power_light = 0
+		power_equip = 0
+		power_environ = 0
+		if(!daylight)
+			luminosity = 1
+			lighting_use_dynamic = 0
 
 	..()
 

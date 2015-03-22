@@ -357,7 +357,7 @@ var/global/list/whitelisted_species = list("Human")
 	heat_level_2 = 480 //Default 400
 	heat_level_3 = 1100 //Default 1000
 
-	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL
+	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL | HAS_SKIN_TONE
 
 	flesh_color = "#34AF10"
 
@@ -373,7 +373,7 @@ var/global/list/whitelisted_species = list("Human")
 	language = "Clatter"
 	attack_verb = "punch"
 
-	flags = IS_WHITELISTED | HAS_LIPS | NO_SCAN |/*NO_EAT |*/ NO_BREATHE /*| NON_GENDERED*/ | NO_BLOOD
+	flags = IS_WHITELISTED | HAS_LIPS | NO_SCAN | NO_BREATHE /*| NON_GENDERED*/ | NO_BLOOD
 
 	default_mutations=list(SKELETON)
 
@@ -500,7 +500,7 @@ var/global/list/whitelisted_species = list("Human")
 	language = "Skrellian"
 	primitive = /mob/living/carbon/monkey/skrell
 
-	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR
+	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_SKIN_TONE
 
 	flesh_color = "#8CD7A3"
 
