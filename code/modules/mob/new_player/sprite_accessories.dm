@@ -414,6 +414,76 @@
 	bald
 		name = "Bald"
 		icon_state = "bald"
+
+/*
+///////////////////////////////////
+/  =---------------------------=  /
+/  == Bay12Soviet Hair Styles ==  /
+/  =---------------------------=  /
+///////////////////////////////////
+*/
+
+	bald
+		name = "Long Tails"
+		icon_state = "hair_long_d_tails"
+
+	bald
+		name = "Long bedhead"
+		icon_state = "hair_long_bedhead"
+
+	bald
+		name = "Flutter Hair"
+		icon_state = "hair_fluttershy"
+
+	bald
+		name = "Judge"
+		icon_state = "hair_judge"
+
+	bald
+		name = "Pigtails"
+		icon_state = "hair_pigtails"
+
+	bald
+		name = "Applejack"
+		icon_state = "hair_applejack"
+
+	bald
+		name = "Emo Long"
+		icon_state = "hair_emolong"
+
+	bald
+		name = "Ci Do Ji"
+		icon_state = "hair_rows2"
+
+	bald
+		name = "Double Bun"
+		icon_state = "hair_doublebun"
+
+	bald
+		name = "Ponytail 4"
+		icon_state = "hair_ponytail4"
+
+	bald
+		name = "Beehive 2"
+		icon_state = "hair_beehive2"
+/*
+	bald
+		name = "Bald"
+		icon_state = "bald"
+
+	bald
+		name = "Bald"
+		icon_state = "bald"
+
+	bald
+		name = "Bald"
+		icon_state = "bald"
+
+	bald
+		name = "Bald"
+		icon_state = "bald"
+*/
+
 /*
 ///////////////////////////////////
 /  =---------------------------=  /
